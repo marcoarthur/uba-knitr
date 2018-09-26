@@ -53,6 +53,13 @@ in whisker plots how each month group determines an U shape in figure (\ref{fig:
 This means that during the winter we have few precipitation, whereas during summer
 we see a huge increase in precepitation, making it the raining season.
 
+Figure \ref{fig:ts_anual} shows time series for the annually precipitation starting
+from 1935.
+
+<< ts_anual, fig.cap='Time series for total year precipitation', echo=FALSE>>=
+plot(mk_ts(raindf$Anual), ylab="precipitation (mm)")
+@
+
 \section{ Conclusion }
 To be done \ldots
 \end{document}
