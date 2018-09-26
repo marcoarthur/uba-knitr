@@ -1,0 +1,58 @@
+\documentclass{article}
+
+% Packages
+
+% Definitions
+
+% This command receive input of geo coordination
+% given in angle, e.g. , 57 (angle unit) 45 (min unit) 22 ( sec unit )
+% Example:
+% \nswe{N}{52}{58.110}
+\def\nswe#1#2#3{#1\,$#2^\circ\,#3'$}
+
+\bibliography{references}
+
+\begin{document}
+<<r setup, include=FALSE>>=
+raindf  <- read.table('./time_series_rain_ubatuba.txt', header=T)
+mk_ts <- function(v) { ts(v, start=1935) }
+# time series of rain for each month and anually
+raindf_ts <- apply(raindf,2, mk_ts)
+@
+
+\title{ Rain Fall Analysis for Ubatuba - SP }
+\author{ Marco Arthur }
+\maketitle
+\section{ Introduction }
+This is a short study about Ubatuba rain regime. This article makes a collection
+of summary simple statistics around collected data from a small meteorological
+station located at \nswe{S}{23}{41.935} , \nswe{W}{45}{113.523}.
+
+Research on profound subjects of how weather climate and climate changes are
+not in the scope of this little article, although we point out at the conclusion
+that we can see running simple models that the total amount of raining seems
+to decrease over time, suggesting that the region can be severely impacted, since
+its biome for centuries has been molded by constant raining.
+
+\section{ Data set and modeling }
+
+The data set used in this study was taken from the meteorological station of APTA
+(Unidade De Pesquisa de Ubatuba) from S\~ao Paulo Government Brazil. The data
+have been collected in a monthly time series starting at January 1935 until
+July 2001 . And measures the amount of raining in each month. We could not secure
+how the methodology was applied to make the measure, therefore we could not use
+an error measure for the data.
+
+
+<<boxplot, fig.cap='distribution over months', echo=FALSE>>=
+boxplot(raindf[,2:13])
+@
+
+We start visualize the distribution of raining during each month, so we can see
+in whisker plots how each month group determines an U shape in figure (\ref{fig:boxplot}).
+This means that during the winter we have few precipitation, whereas during summer
+we see a huge increase in precepitation, making it the raining season.
+
+\section{ Conclusion }
+To be done \ldots
+\end{document}
