@@ -1,6 +1,21 @@
-\documentclass{article}
+\documentclass[12pt]{article}
+
+% Definitions
+\setlength{\headheight}{10pt}
+\setlength{\headsep}{15pt}
+\setlength{\topmargin}{-25pt}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{8.7in}
+\setlength{\footskip}{0.3in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\evensidemargin}{0.0in}
+\setlength{\textwidth}{6.5in}
 
 % Packages
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
 
 % Definitions
 
@@ -10,7 +25,6 @@
 % \nswe{N}{52}{58.110}
 \def\nswe#1#2#3{#1\,$#2^\circ\,#3'$}
 
-\bibliography{references}
 
 \begin{document}
 <<r setup, include=FALSE>>=
@@ -23,6 +37,7 @@ raindf_ts <- apply(raindf,2, mk_ts)
 \title{ Rain Fall Analysis for Ubatuba - SP }
 \author{ Marco Arthur }
 \maketitle
+\newpage
 \section{ Introduction }
 This is a short study about Ubatuba rain regime. This article makes a collection
 of summary simple statistics around collected data from a small meteorological
@@ -33,6 +48,10 @@ not in the scope of this little article, although we point out at the conclusion
 that we can see running simple models that the total amount of raining seems
 to decrease over time, suggesting that the region can be severely impacted, since
 its biome for centuries has been molded by constant raining.
+
+This study is quite simple and has only three sections. First section we discuss the data-set
+origin and we guide the reader for a detailed analysis of our findings.
+After that we draw our main conclusions in the next and last section of this article.
 
 \section{ Data set and modeling }
 
@@ -48,18 +67,45 @@ an error measure for the data.
 boxplot(raindf[,2:13])
 @
 
-We start visualize the distribution of raining during each month, so we can see
-in whisker plots how each month group determines an U shape in figure (\ref{fig:boxplot}).
+We start to visualize the distribution of raining during each month, so we can see
+in whisker plots how for each month the graph determines an U shape in figure (\ref{fig:boxplot}).
+This kind of shape is considered to describe the natural precipitation
+\cite{Samplingstatistics2015} .
 This means that during the winter we have few precipitation, whereas during summer
-we see a huge increase in precepitation, making it the raining season.
+we see a huge increase in precipitation, making it the raining season.
 
-Figure \ref{fig:ts_anual} shows time series for the annually precipitation starting
-from 1935.
 
 << ts_anual, fig.cap='Time series for total year precipitation', echo=FALSE>>=
 plot(mk_ts(raindf$Anual), ylab="precipitation (mm)")
 @
 
-\section{ Conclusion }
+Figure (\ref{fig:ts_anual}) shows time series for the annually precipitation starting
+from 1935. It shows a sharp drop to the bottom at end. This is because the last
+year is only partially computed, data goes until July, so we have a partial sum for this year.
+So we drop this point and creates a new figure that includes our linear regression model in figure (\ref{fig:ts_anual_lrm}).
+
+<<ts_anual_lrm, echo=FALSE, fig.cap='Linear Regression for Anual Precipitation'>>=
+v <- raindf$Anual
+v <- v[-length(v)]
+t <- seq(from=1935, to=(1935+length(v) -1))
+anual_ts <- mk_ts(v)
+plot(anual_ts, ylab='Precipitation (mm)')
+anual_lm = lm(anual_ts ~ t + 1, na.action = na.exclude)
+lines(t[1:length(anual_lm$fitted.values)], anual_lm$fitted.values, col="red")
+@
+
+As we can see from figure (\ref{fig:ts_anual_lrm}) the precipitation has a linear tendency to
+decrease and, even discarding the last year data, still shows a big slope.  To be exact the estimated slope is exactly \Sexpr{round(anual_lm$coef[2], 3)} (mm) per year. That brings
+confidence that this is a changing pattern in precipitation with a \textbf{clear decrease over
+total amount of precipitation over time}. We surely don't consider the linear model the best model to
+make precipitation forecasting. Much natural is to build seasoned models, that generally are the
+process in nature, some kind of cycle taking place, as is the seasons itself, a seasoned event.
+Although, and still, the linear approximation is good choice to check the decrease over the type
+during the season cycles, offering a good way to visualize it. 
+
+\section{ Conclusions }
 To be done \ldots
+
+\bibliography{references}{}
+\bibliographystyle{plain}
 \end{document}
