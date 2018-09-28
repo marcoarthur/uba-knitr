@@ -103,8 +103,20 @@ process in nature, some kind of cycle taking place, as is the seasons itself, a 
 Although, and still, the linear approximation is good choice to check the decrease over the type
 during the season cycles, offering a good way to visualize it. 
 
+
+
 \section{ Conclusions }
-To be done \ldots
+
+As part of analysis we can ask many questions, one obvious is ``whether the
+lowering is related to a periodic rain regime or can be result of a trend''.
+This can not get a simple answer, since we have to fix a window in time to get
+an exact idea of the \textbf{period}. For sure, such analysis should employee
+methods for seasonal analysis, such of found in Kendalls' Book \cite{StaurtKendallsAdvancedTheory1998}.
+And that is a good continue for this research and tackle the more difficult
+task: ``If changes can be confirmed, does this have any relation to world
+climate changes?'', but then, our study would likely should shift directions
+to make research in fields of metheorology, climate and earth sciences, such
+as oceanography, geology, and possibly biology as well.
 
 \bibliography{references}{}
 \bibliographystyle{plain}
