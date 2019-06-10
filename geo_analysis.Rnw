@@ -94,6 +94,10 @@ anual_lm = lm(anual_ts ~ t + 1, na.action = na.exclude)
 lines(t[1:length(anual_lm$fitted.values)], anual_lm$fitted.values, col="red")
 @
 
+<<ts_anual_qq, echo=FALSE, fig.cap='QQ plot'>>=
+plot(anual_lm)
+@
+
 As we can see from figure (\ref{fig:ts_anual_lrm}) the precipitation has a linear tendency to
 decrease and, even discarding the last year data, still shows a big slope.  To be exact the estimated slope is exactly \Sexpr{round(anual_lm$coef[2], 3)} (mm) per year. That brings
 confidence that this is a changing pattern in precipitation with a \textbf{clear decrease over
